@@ -25,6 +25,21 @@ MAINTAINER Nicolas De Loof <nicolas.deloof@gmail.com>
 
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 
-RUN curl -fsSL https://get.docker.com/ | sh
+USER root
+
+RUN apt-get update
+RUN apt-get dist-upgrade -y
+RUN apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common -y
+RUN add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) \
+    stable"
+RUN apt-get update && apt-get install docker-ce -y --force-yes
+
+USER jenkins
 
 ENTRYPOINT ["jenkins-slave"]
