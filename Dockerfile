@@ -25,4 +25,6 @@ MAINTAINER Nicolas De Loof <nicolas.deloof@gmail.com>
 
 COPY jenkins-slave /usr/local/bin/jenkins-slave
 
+RUN curl -fsSL https://get.docker.com/ | sh
+
 ENTRYPOINT ["jenkins-slave"]
